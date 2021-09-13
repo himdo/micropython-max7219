@@ -25,6 +25,7 @@ SOFTWARE.
 """
 
 from micropython import const
+from time import sleep
 import framebuf
 
 _NOOP = const(0)
@@ -97,3 +98,20 @@ class Matrix8x8:
             for m in range(self.num):
                 self.spi.write(bytearray([_DIGIT0 + y, self.buffer[(y * self.num) + m]]))
             self.cs(1)
+
+    def clear(self):
+        self.fill(0)
+        self.show()
+
+    def showText(self, text):
+        self.clear()
+        self.text(text,0,0,1)
+        self.show()
+
+    def scrollText(self, text, sleepTime):
+        scrollBy = len(text) - self.num
+        self.showText(text)
+        for _ in range(scrollBy):
+            sleep(sleepTime)
+            text = text [1:]
+            self.showText(text)
