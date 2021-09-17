@@ -115,3 +115,10 @@ class Matrix8x8:
             sleep(sleepTime)
             text = text [1:]
             self.showText(text)
+
+    def constantScrolling(self, text, endDelays, middleDelays, numberOfDisplays):
+        for _ in range(numberOfDisplays):
+            self.showText(text)
+            sleep(endDelays)
+            self.scrollText(text,middleDelays)
+            sleep(endDelays)
